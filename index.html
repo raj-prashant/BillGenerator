@@ -188,7 +188,7 @@
             SubTotalElement = document.getElementById('SubTotal');
             SGSTElement = document.getElementById('SGST');
             CGSTElement = document.getElementById('CGST');
-            amount = parseFloat(amount);
+            amount = parseFloat(amount)||0;
             tax = parseFloat(tax);
             SubTotalVal = parseFloat(SubTotalElement.innerText) || 0;
             let s = (amount * 100) / (100 + tax);
