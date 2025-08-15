@@ -69,16 +69,14 @@
 
         th:nth-child(2),
         td:nth-child(2) {
-            width: 60%;
+            width: 40%;
             /* First column - 20% of table width */
         }
-
         th:nth-child(3),
         td:nth-child(3) {
-            width: 9%;
+            width: 20%;
             /* First column - 20% of table width */
         }
-
         th:nth-child(4),
         td:nth-child(4) {
             width: 9%;
@@ -93,6 +91,12 @@
 
         th:nth-child(6),
         td:nth-child(6) {
+            width: 9%;
+            /* First column - 20% of table width */
+        }
+
+        th:nth-child(7),
+        td:nth-child(7) {
             width: 9%;
             /* First column - 20% of table width */
         }
@@ -126,20 +130,25 @@
 </head>
 
 <body id="content">
+    <div class="right">
+        <p><label for="billNo">Bill No: </label><input type="text" id="billNo"></p>
+    </div>
     <h3>Anjali Enterprises <p>( D.L No: 20B-107981 / 21B-107982 )</p>
     </h3>
-    <p>Rahat Clinic, Hariharganj <br>Jharkhand, Palamu, 822131 </p>
+    <p><b>GSTIN</b>20AKZPG6893L1ZD<br>Jharkhand, Palamu</p>
     <br>
     <div class="right">
         <p><label for="date">Date: </label><input type="date" name="" id="date"></p>
     </div>
-    <h4><label for="cname">Customer Name: </label> <input type="text" id="cname"></h4>
+    <h4><label for="cname">Buyer Name: </label> <input type="text" id="cname"></h4>
+    <h4><label for="dl">DL: </label> <input type="text" id="dl"></h4>
     <br>
     <table>
         <thead>
             <tr>
                 <th>Sl.No</th>
                 <th>Item </th>
+                <th>Batch No </th>
                 <th>Quantity</th>
                 <th>SGST</th>
                 <th>CGST</th>
@@ -149,33 +158,32 @@
         <tbody id="tableData">
         </tbody>
         <tr>
-            <td colspan="6">
+            <td colspan="7">
                 <button id="addRow" onclick="addRow()"> Add a Item</button>
                 <button id="delRow" onclick="delRow()"> Delete last Item</button>
             </td>
         </tr>
         <tfoot>
             <tr>
-                <td colspan="5">subtotal</td>
+                <td colspan="6">subtotal</td>
                 <td id="SubTotal"></td>
             </tr>
             <tr>
-                <td colspan="5">SGST</td>
+                <td colspan="6">SGST</td>
                 <td id="SGST"></td>
             </tr>
             <tr>
-                <td colspan="5">CGST</td>
+                <td colspan="6">CGST</td>
                 <td id="CGST"></td>
             </tr>
             <tr>
-                <td colspan="5">Grand Total</td>
+                <td colspan="6">Grand Total</td>
                 <td id="Total"></td>
             </tr>
         </tfoot>
     </table>
     <button id="printpage" onclick="printpage()"> Print Bill </button>
-    <a href="./WholeSale.html"><button id="changeMode"> WholeSale Bill </button></a>
-    
+    <a href="./index.html"><button id="changeMode"> Normal Bill </button></a>
     <script>
         let tableBody = document.getElementById('tableData');
         let serialNumber = 1; // To track the Sl.No
@@ -185,6 +193,7 @@
 
             // Get user input for each cell
             let itemName = prompt("Enter Item Name:");
+            let batchNo = prompt("Enter Batch No:");
             let quantity = prompt("Enter Quantity:");
             let tax = prompt("Enter tax (e.g., 12/18):");
             let cgst = tax / 2;
@@ -214,6 +223,10 @@
             let itemCell = document.createElement('td');
             itemCell.textContent = itemName;
             newRow.appendChild(itemCell);
+
+            let batchCell = document.createElement('td');
+            batchCell.textContent = batchNo;
+            newRow.appendChild(batchCell);
 
             let quantityCell = document.createElement('td');
             quantityCell.textContent = quantity;
