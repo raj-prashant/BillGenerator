@@ -148,6 +148,7 @@
         <tr>
             <td colspan="6">
                 <button id="addRow" onclick="addRow()"> Add a Item</button>
+                <button id="delRow" onclick="delRow()"> Delete last Item</button>
             </td>
         </tr>
         <tfoot>
@@ -227,9 +228,38 @@
             // Append the newly created row to the table body
             tableBody.appendChild(newRow);
         }
-        function printpage() {
+        function delRow() {
+            // Check if there are any rows to delete
+            if (tableBody.rows.length > 0) {
+                // Remove the last row from the table body
+                let lastRow = tableBody.lastElementChild;
+                if (lastRow) {
+                    let amount = parseFloat(lastRow.cells[5].textContent);
+                    let sgst = parseFloat(lastRow.cells[3].textContent);
+                    let cgst = parseFloat(lastRow.cells[4].textContent);
+                    let subtotal = parseFloat(document.getElementById('SubTotal').innerText);
+                    let sgstTotal = parseFloat(document.getElementById('SGST').innerText);
+                    let cgstTotal = parseFloat(document.getElementById('CGST').innerText);
+                    let total = parseFloat(document.getElementById('Total').innerText);
+
+                    // Update totals
+                    document.getElementById('SubTotal').innerText = (subtotal - amount).toFixed(2);
+                    document.getElementById('SGST').innerText = (sgstTotal - sgst*amount/100).toFixed(2);
+                    document.getElementById('CGST').innerText = (cgstTotal - cgst*amount/100).toFixed(2);
+                    document.getElementById('Total').innerText = (total - (amount+sgst*amount/100+cgst*amount/100)).toFixed(2);
+
+                    // Remove the last row
+                    tableBody.removeChild(lastRow);
+                    serialNumber--; // Decrement Sl.No counter
+                }
+            } else {
+                alert("No more rows to delete.");
+            }
+        }
+        async function printpage() {
             document.getElementById('addRow').style.display = "none";
             document.getElementById('printpage').style.display = "none";
+            document.getElementById('delRow').style.display = "none";
             const element = document.getElementById('content');
             const options = {
                 margin: 0.5,
@@ -239,7 +269,10 @@
                 jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
             };
 
-            html2pdf().from(element).set(options).save();
+            await html2pdf().from(element).set(options).save();
+            document.getElementById('addRow').style.display = "inline";
+            document.getElementById('printpage').style.display = "block";
+            document.getElementById('delRow').style.display = "inline";
         }
     </script>
 </body>
