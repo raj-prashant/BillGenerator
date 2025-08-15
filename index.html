@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generate Bill</title>
     <style>
+        input{
+            background-color: #f0f0f0;
+        }
+        
         * {
             font-family: Arial, sans-serif;
             box-sizing: border-box;
@@ -260,6 +264,14 @@
             document.getElementById('addRow').style.display = "none";
             document.getElementById('printpage').style.display = "none";
             document.getElementById('delRow').style.display = "none";
+            // Select all input elements on the page
+            const allInputs = document.querySelectorAll('input');
+
+            // Loop through the NodeList of input elements
+            for (let i = 0; i < allInputs.length; i++) {
+            // Change the background color of each input field
+            allInputs[i].style.backgroundColor = '#FFFFFF'; // You can use any color value here
+            }
             const element = document.getElementById('content');
             const options = {
                 margin: 0.5,
